@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Genealogy of Statistical Indicators</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFFFF;
+  --slab:#EFEDE9;      /* 콘크리트 */
+  --slab2:#E4E1DC;
+  --ink:#161514;
+  --mid:#6C6963;
+  --hair:#C9C5BE;
+  --p1:#EBC2D6;        /* pale pink */
+  --p2:#B34A83;        /* magenta */
+  --p3:#523074;        /* deep violet */
+  --bd:2px solid var(--ink);
+  --hr:1px solid var(--hair);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);
+  font-family:Archivo,"Noto Sans KR",system-ui,sans-serif;font-size:15.5px;line-height:1.65}
+.wrap{max-width:1120px;margin:0 auto;padding:0 0 220px}
+
+/* ══ 콘크리트 슬래브 ══ */
+.slab{background:var(--slab);
+  background-image:repeating-linear-gradient(180deg,rgba(0,0,0,.028) 0 1px,transparent 1px 46px);
+  border:var(--bd);border-top:0}
+.mono{font-family:"IBM Plex Mono",monospace;letter-spacing:.14em;text-transform:uppercase}
+
+/* ══ 표제부 ══ */
+.mast{border:var(--bd);border-top:14px solid var(--ink);padding:0}
+.mast .band{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;
+  padding:10px 20px;border-bottom:var(--bd);font-size:10.5px}
+h1{font-weight:800;font-size:clamp(38px,9.4vw,104px);line-height:.88;letter-spacing:-.045em;
+  text-transform:uppercase;padding:34px 20px 8px}
+h1 .thin{font-weight:400;color:var(--mid)}
+.mast .sub{padding:0 20px 30px;max-width:640px;color:#3a3835}
+.specs{display:grid;grid-template-columns:repeat(4,1fr);border-top:var(--bd)}
+.specs div{padding:14px 16px 16px;border-right:var(--hr)}
+.specs div:last-child{border-right:0}
+.specs b{display:block;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.16em;color:var(--mid);text-transform:uppercase}
+.specs span{font-weight:800;font-size:26px;letter-spacing:-.02em;line-height:1.4}
+.rule{height:14px;background:var(--ink)}
+.rule.p{background:var(--p2)}
+
+/* ══ 섹션 ══ */
+section{border:var(--bd);border-top:0}
+.head{display:grid;grid-template-columns:82px 1fr;border-bottom:var(--bd)}
+.head .n{background:var(--ink);color:var(--paper);display:grid;place-items:center;
+  font-family:"IBM Plex Mono",monospace;font-size:20px;font-weight:600}
+.head .t{padding:16px 20px}
+.head h2{font-weight:800;font-size:clamp(20px,4.4vw,30px);line-height:1.05;letter-spacing:-.03em;text-transform:uppercase}
+.head p{font-size:14px;color:#403d39;margin-top:6px;max-width:660px;word-break:keep-all}
+.pad{padding:20px}
+
+/* ══ 범례 ══ */
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));border-bottom:var(--bd)}
+.legend div{padding:12px 16px;border-right:var(--hr);display:flex;gap:10px;align-items:center;font-size:13px}
+.legend div:last-child{border-right:0}
+.legend i{width:22px;height:22px;flex:none;border:2px solid var(--ink)}
+.legend b{display:block;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.14em;color:var(--mid)}
+
+/* ══ 벤 ══ */
+.stage{overflow:hidden;border-bottom:var(--bd);background:var(--paper)}
+.stage-inner{width:1600px;height:1250px;position:relative;transform-origin:top left}
+.stage-inner svg{position:absolute;inset:0;width:1600px;height:1250px}
+.zone{position:absolute;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
+.zone b{display:block;font-weight:800;font-size:30px;letter-spacing:-.02em;text-transform:uppercase}
+.zone span{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.1em;color:var(--mid)}
+
+/* ══ 지표 블록 ══ */
+.chip{position:absolute;transform:translate(-50%,-50%);width:166px;background:var(--paper);
+  border:var(--bd);padding:0;text-align:left;cursor:pointer;font:inherit;color:var(--ink)}
+.chip .bar{height:9px;border-bottom:var(--bd)}
+.chip .in{padding:8px 9px 9px}
+.chip .sym{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:19px;line-height:1.1}
+.chip .nm{font-size:12.5px;font-weight:700;line-height:1.3;margin-top:2px;word-break:keep-all}
+.chip .rng{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--mid);margin-top:4px}
+.chip .tag{font-size:9.5px;color:#57534d;margin-top:5px;line-height:1.45;word-break:keep-all}
+.chip:hover,.chip:focus-visible{background:var(--slab);outline:none;z-index:9}
+.chip:focus-visible{box-shadow:0 0 0 3px var(--p2)}
+.chip.core{width:186px}
+.chip.core .in{background:var(--p1)}
+
+.grid-chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:0;border-top:var(--bd)}
+.grid-chips .chip{position:static;transform:none;width:auto;border:0;border-right:var(--hr);border-bottom:var(--hr)}
+
+/* ══ 기법 ══ */
+.methods{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr))}
+.m{border-right:var(--hr);border-bottom:var(--hr);padding:20px 18px 18px;background:var(--paper)}
+.m:nth-child(6n+1),.m:nth-child(6n+4){background:var(--slab)}
+.m .no{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;color:var(--mid)}
+.m h3{font-size:19px;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin:4px 0 2px;word-break:keep-all}
+.m .en{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;color:var(--p3);text-transform:uppercase}
+.m .q{font-size:14px;margin:14px 0 0;padding:10px 0 0;border-top:var(--bd);word-break:keep-all}
+.m .lbl{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.16em;color:var(--mid);margin:16px 0 8px;text-transform:uppercase}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{font-family:"IBM Plex Mono",monospace;font-size:11.5px;border:var(--bd);background:var(--paper);
+  padding:4px 9px;cursor:pointer;color:var(--ink);display:flex;align-items:center;gap:7px;line-height:1.5}
+.pill i{width:9px;height:9px;flex:none;border:1px solid var(--ink)}
+.pill:hover,.pill:focus-visible{background:var(--ink);color:var(--paper);outline:none}
+.pill:hover i,.pill:focus-visible i{border-color:var(--paper)}
+.cut{margin-top:16px;border-top:var(--hr);padding-top:10px;font-size:13px;word-break:keep-all;color:#3a3835}
+.cut b{display:block;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.16em;color:var(--mid);margin-bottom:4px;text-transform:uppercase}
+
+/* ══ 표 ══ */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:12px 14px;text-align:left;border-bottom:var(--hr);vertical-align:top;word-break:keep-all}
+th{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  border-bottom:var(--bd);background:var(--slab)}
+tbody tr:nth-child(even){background:#faf9f7}
+td code,td .sy{font-family:"IBM Plex Mono",monospace;font-weight:600}
+.idx td:first-child{width:104px}
+.idx .zc{display:inline-block;width:10px;height:10px;border:1px solid var(--ink);margin-right:6px}
+
+/* ══ 도크 ══ */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--paper);color:var(--ink);
+  border-top:6px solid var(--ink);transform:translateY(110%);transition:transform .18s ease-out;max-height:72vh;overflow:auto}
+.dock.on{transform:translateY(0)}
+.dock-in{max-width:1120px;margin:0 auto;padding:18px 20px 26px;display:grid;grid-template-columns:160px 1fr;gap:18px}
+.dbadge{border:var(--bd);align-self:start}
+.dbadge .b{height:12px;border-bottom:var(--bd)}
+.dbadge em{display:block;font-family:"IBM Plex Mono",monospace;font-style:normal;font-weight:600;font-size:36px;padding:14px 10px 6px;text-align:center}
+.dbadge small{display:block;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.12em;
+  padding:0 8px 12px;text-align:center;color:var(--mid)}
+.dock h3{font-size:22px;font-weight:800;letter-spacing:-.02em}
+.dmeta{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--mid);margin:4px 0 14px}
+.cells{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));border-top:var(--bd);border-left:var(--bd)}
+.cellx{border-right:var(--bd);border-bottom:var(--bd);padding:11px 13px}
+.cellx b{display:block;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.16em;color:var(--mid);margin-bottom:5px}
+.cellx span{font-size:13.5px;word-break:keep-all}
+.dclose{position:absolute;right:16px;top:12px;border:var(--bd);background:var(--paper);
+  width:34px;height:34px;font-size:15px;cursor:pointer;font-family:"IBM Plex Mono",monospace}
+.hint{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:40;background:var(--ink);color:var(--paper);
+  border:var(--bd);padding:8px 16px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em}
+@media(max-width:640px){.dock-in{grid-template-columns:1fr}.specs{grid-template-columns:1fr 1fr}
+  .specs div:nth-child(2n){border-right:0}.specs div:nth-child(-n+2){border-bottom:var(--hr)}}
+
+/* ══ 인쇄 ══ */
+@media print{.noprint{display:none!important}
+  @page{size:A4;margin:14mm}
+  body{font-size:10.5pt;background:#fff}
+  .wrap{max-width:none;padding:0}
+  .slab,.m:nth-child(6n+1),.m:nth-child(6n+4),th{background:#fff !important;background-image:none !important}
+  .dock,.hint{display:none !important}
+  section,.m,.mast{break-inside:avoid}
+  .head{break-after:avoid}
+  .stage-inner{transform:scale(.62) !important}
+  .stage{height:auto !important}
+  tr,.chip{break-inside:avoid}
+  a{text-decoration:none;color:inherit}
+  .print-only{display:block}
+}
+.print-only{display:none}
+</style>
+</head>
+<body>
+<nav style="position:sticky;top:0;z-index:60;background:#FFF;border-bottom:2px solid #161514;display:flex" class="noprint">
+<a href="../index.html" style="padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-decoration:none;background:#161514;color:#FFF">← 강의 포털</a>
+<a href="../slides/m3.html" style="padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-decoration:none;color:#161514;border-right:1px solid #C9C5BE">M3 슬라이드</a>
+<a href="../labs/" style="padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-decoration:none;color:#161514">실습</a></nav>
+<div class="wrap">
+
+<!-- ══ 표제부 ══ -->
+<header class="mast">
+  <div class="band mono"><span>Social Science · Thesis Edition</span><span>Rev. 02 · Concrete</span></div>
+  <h1>Genealogy<br><span class="thin">of</span> Statistical<br>Indicators</h1>
+  <p class="sub">사회과학 학위논문에서 쓰이는 통계지표를 <b>목적</b>으로 묶고(LAYER 01), 그 지표들이 <b>어떤 분석기법에서 어떻게 소집되는지</b>(LAYER 02) 연결한 지도. 각 지표의 뜻·범위·수식·심사 포인트는 마지막 색인에 전부 실려 있습니다.</p>
+  <div class="specs">
+    <div><b>Indicators</b><span id="cnt1">–</span></div>
+    <div><b>Methods</b><span>14</span></div>
+    <div><b>Domains</b><span>05</span></div>
+    <div><b>Format</b><span>A4</span></div>
+  </div>
+</header>
+<div class="rule"></div>
+
+<!-- ══ LAYER 01 ══ -->
+<section>
+  <div class="head"><div class="n">01</div><div class="t">
+    <h2>The Indicator Map</h2>
+    <p>지표를 "무엇을 하려는 도구인가"로 묶었습니다. 원이 겹치는 자리는 두 목적을 동시에 수행하는 지표입니다. 블록을 누르면 상세가 열립니다.</p>
+  </div></div>
+  <div class="legend">
+    <div><i style="background:#EBC2D6"></i><span><b>Association</b>관계·연관</span></div>
+    <div><i style="background:#B34A83"></i><span><b>Difference</b>차이·비교</span></div>
+    <div><i style="background:#523074"></i><span><b>Prediction</b>예측·설명</span></div>
+    <div><i style="background:#E4E1DC"></i><span><b>Measurement</b>측정·구조</span></div>
+    <div><i style="background:#161514"></i><span><b>Nested</b>위계·다층</span></div>
+  </div>
+  <div class="stage"><div class="stage-inner" id="stage">
+    <svg viewBox="0 0 1600 1250" aria-hidden="true">
+      <g stroke-width="2.5" fill-opacity=".22" style="mix-blend-mode:multiply">
+        <circle cx="540"  cy="430" r="330" fill="#EBC2D6" stroke="#161514"/>
+        <circle cx="1060" cy="430" r="330" fill="#B34A83" stroke="#161514" fill-opacity=".16"/>
+        <circle cx="800"  cy="760" r="330" fill="#523074" stroke="#161514" fill-opacity=".13"/>
+        <circle cx="450"  cy="840" r="300" fill="#C9C5BE" stroke="#161514" fill-opacity=".3"/>
+        <circle cx="1150" cy="840" r="300" fill="#161514" stroke="#161514" fill-opacity=".09"/>
+      </g>
+    </svg>
+    <div class="zone" style="left:375px;top:148px"><b>Association</b><span>얼마나 같이 움직이나</span></div>
+    <div class="zone" style="left:1230px;top:148px"><b>Difference</b><span>집단이 정말 다른가</span></div>
+    <div class="zone" style="left:800px;top:1175px"><b>Prediction</b><span>무엇이 무엇을 만드나</span></div>
+    <div class="zone" style="left:262px;top:1100px"><b>Measurement</b><span>제대로 재고 있나</span></div>
+    <div class="zone" style="left:1342px;top:1100px"><b>Nested</b><span>어느 층의 이야기인가</span></div>
+  </div></div>
+</section>
+
+<!-- ══ 공통 ══ -->
+<section>
+  <div class="head"><div class="n">◇</div><div class="t">
+    <h2>All Models · 공통 판정단</h2>
+    <p>어느 원에 있든 심사에서 반드시 확인받는 지표들. 이것이 빠지면 나머지 숫자는 읽히지 않습니다.</p>
+  </div></div>
+  <div class="grid-chips" id="common"></div>
+</section>
+
+<!-- ══ LAYER 02 ══ -->
+<section>
+  <div class="head"><div class="n">02</div><div class="t">
+    <h2>Methods &amp; Their Indicators</h2>
+    <p>학위논문에서 실제로 돌리는 분석기법 14종. 각 카드의 지표 버튼을 누르면 그것이 LAYER 01의 어느 원 소속인지, 무엇을 뜻하는지 그대로 이어집니다.</p>
+  </div></div>
+  <div class="methods" id="methods"></div>
+</section>
+
+<!-- ══ 치트시트 ══ -->
+<section>
+  <div class="head"><div class="n">◆</div><div class="t">
+    <h2>Cut-off · 합격선</h2>
+    <p>보고서에 숫자를 적을 때 함께 적어야 할 기준선.</p>
+  </div></div>
+  <table>
+    <thead><tr><th>구간</th><th>지표</th><th>통상 기준</th><th>덧붙이는 말</th></tr></thead>
+    <tbody>
+      <tr><td>신뢰도</td><td><code>α / ω</code></td><td>≥ .70 (탐색 .60)</td><td>문항 수에 민감. 부하가 불균등하면 ω가 정직합니다.</td></tr>
+      <tr><td>수렴타당도</td><td><code>λ / AVE / CR</code></td><td>λ ≥ .50~.70 · AVE ≥ .50 · CR ≥ .70</td><td>AVE &lt; .50인데 CR ≥ .70이면 조건부 수용 논거를 답니다.</td></tr>
+      <tr><td>판별타당도</td><td><code>√AVE / HTMT</code></td><td>√AVE &gt; 상관 · HTMT &lt; .85</td><td>Fornell–Larcker보다 HTMT가 최근 심사 선호.</td></tr>
+      <tr><td>모형적합</td><td><code>CFI / TLI</code></td><td>≥ .90 수용 · ≥ .95 양호</td><td>N &lt; 200이면 과소추정됩니다.</td></tr>
+      <tr><td>모형적합</td><td><code>RMSEA / SRMR</code></td><td>≤ .08 (양호 ≤ .06)</td><td>RMSEA는 90% CI 상한까지 보고.</td></tr>
+      <tr><td>다층 진입</td><td><code>ICC(1)</code></td><td>≥ .05~.10</td><td>HLM을 쓸 자격 증명.</td></tr>
+      <tr><td>잠재계층</td><td><code>Entropy</code></td><td>≥ .80</td><td>BIC 최저 + LMR/BLRT 유의 + 최소집단 5% 이상.</td></tr>
+      <tr><td>측정동일성</td><td><code>ΔCFI / ΔRMSEA</code></td><td>ΔCFI ≤ .01 · ΔRMSEA ≤ .015</td><td>χ² 차이검정은 표본에 민감해 보조 지표로.</td></tr>
+      <tr><td>다중공선성</td><td><code>VIF</code></td><td>&lt; 10 (엄격 &lt; 5)</td><td>상호작용항은 평균중심화 후 재확인.</td></tr>
+      <tr><td>효과크기</td><td><code>d / f² / η²</code></td><td>.2·.5·.8 / .02·.15·.35</td><td>p 대신 실질 크기를 말하는 지표.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ 색인 ══ -->
+<section>
+  <div class="head"><div class="n">03</div><div class="t">
+    <h2>Index · 지표 전체 색인</h2>
+    <p>화면에서는 블록을 눌러 보고, 인쇄본에서는 이 표로 찾습니다. 영역 · 뜻 · 범위와 방향 · 수식 · 심사 포인트 순서.</p>
+  </div></div>
+  <table class="idx">
+    <thead><tr><th>기호</th><th>지표 · 영역</th><th>뜻과 쓰는 순간</th><th>범위 · 수식</th><th>심사 포인트</th></tr></thead>
+    <tbody id="index"></tbody>
+  </table>
+</section>
+<div class="rule p"></div>
+</div>
+
+<div class="hint" id="hint">블록을 눌러 상세 열기</div>
+
+<div class="dock" id="dock" role="dialog" aria-live="polite">
+  <button class="dclose" id="close" aria-label="닫기">✕</button>
+  <div class="dock-in">
+    <div class="dbadge"><div class="b" id="dBar"></div><em id="dSym">τ</em><small id="dZone">DOMAIN</small></div>
+    <div>
+      <h3 id="dName">지표</h3>
+      <div class="dmeta" id="dMeta"></div>
+      <div class="cells">
+        <div class="cellx"><b>WHAT · 뜻</b><span id="dWhat"></span></div>
+        <div class="cellx"><b>HOW · 수식</b><span id="dHow"></span></div>
+        <div class="cellx"><b>WHEN · 쓰는 순간</b><span id="dWhen"></span></div>
+        <div class="cellx"><b>WHY · 심사 포인트</b><span id="dWhy"></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const C={a:['#EBC2D6','ASSOCIATION 관계'],b:['#B34A83','DIFFERENCE 차이'],c:['#523074','PREDICTION 예측'],
+ d:['#E4E1DC','MEASUREMENT 측정'],e:['#161514','NESTED 위계'],k:['#FFFFFF','ALL MODELS 공통']};
+
+const DB={
+ r:{z:"a",x:300,y:350,sym:"r",nm:"Pearson 상관",rng:"−1 ~ +1 · |↑|",tag:"#선형 #연속형 #방향과강도",
+  what:"두 연속변인이 같은 방향으로 얼마나 함께 움직이는지의 표준화 크기.",how:"r = Cov(X,Y) / (s_x·s_y)",
+  when:"상관행렬 표, 회귀 투입 전 변인 관계 점검.",why:".10/.30/.50이 소·중·대. 인과가 아니며 이상치에 약합니다."},
+ rho:{z:"a",x:430,y:200,sym:"ρ",nm:"Spearman 상관",rng:"−1 ~ +1 · |↑|",tag:"#순위 #비모수 #단조관계",
+  what:"순위로 계산한 상관. 곡선이어도 단조롭기만 하면 잡아냅니다.",how:"순위변환 후 Pearson 공식",
+  when:"서열척도·심한 편포·이상치 많은 소표본.",why:"정규성 위배 시의 정공법. 왜 바꿨는지 근거를 답니다."},
+ tau:{z:"a",x:600,y:180,sym:"τ",nm:"Kendall's tau",rng:"−1 ~ +1 · |↑|",tag:"#일치쌍 #소표본강건 #순위",
+  what:"모든 짝에서 순서가 일치한 쌍과 뒤집힌 쌍의 비율 차이.",how:"τ = (C − D) / [n(n−1)/2]",
+  when:"표본이 작고 동점이 많을 때, 평정자 순위 일치도.",why:"ρ보다 작게 나오는 것이 정상. 확률적 우위로 해석합니다."},
+ pr:{z:"a",x:280,y:550,sym:"pr",nm:"편상관",rng:"−1 ~ +1 · |↑|",tag:"#통제 #제3변인 #허위상관제거",
+  what:"제3변인 영향을 두 변인 모두에서 걷어낸 순수 관계.",how:"pr = (r_xy − r_xz·r_yz) / √[(1−r_xz²)(1−r_yz²)]",
+  when:"통제변인 투입 전후 관계 변화 제시.",why:"편상관(pr)과 준편상관(sr)의 혼동이 잦습니다."},
+ V:{z:"a",x:800,y:300,sym:"V",nm:"Cramér's V",rng:"0 ~ 1 · ↑",tag:"#교차표 #범주형 #χ²효과크기",
+  what:"카이제곱의 연관 강도를 표본크기와 무관하게 표준화한 값.",how:"V = √( χ² / [N·min(r−1,c−1)] )",
+  when:"교차분석이 유의할 때 그 크기를 말할 때.",why:"χ²는 N이 크면 무조건 유의합니다. V가 그 함정을 막습니다."},
+ rpb:{z:"b",x:800,y:420,sym:"r_pb",nm:"점이연 상관",rng:"−1 ~ +1 · |↑|",tag:"#이분×연속 #t검정과등가",
+  what:"이분 변인과 연속 변인의 상관. 독립표본 t검정과 같은 정보.",how:"r_pb = √( t² / (t²+df) )",
+  when:"성별·집단더미와 결과변인의 관련 강도.",why:"t의 p와 r_pb는 같은 사건의 두 언어입니다."},
+ t:{z:"b",x:980,y:180,sym:"t",nm:"t 통계량",rng:"−∞ ~ ∞ · |↑|",tag:"#두집단 #평균차 #자유도",
+  what:"평균 차이를 그 차이의 표준오차로 나눈 신호 대 잡음비.",how:"t = (M₁ − M₂) / SE_diff",
+  when:"두 집단 비교, 대응표본 사전–사후.",why:"Levene 등분산 확인 후 Welch 여부를 밝힙니다."},
+ F:{z:"b",x:1180,y:190,sym:"F",nm:"F 비 (ANOVA)",rng:"0 ~ ∞ · ↑",tag:"#세집단이상 #분산비 #사후검정",
+  what:"집단 간 분산이 집단 내 분산보다 몇 배 큰지.",how:"F = MS_between / MS_within",
+  when:"3집단 이상 평균 비교, 회귀모형 전체 유의성.",why:"유의하면 사후검정과 효과크기를 반드시 붙입니다."},
+ chi:{z:"b",x:1300,y:350,sym:"χ²",nm:"카이제곱",rng:"0 ~ ∞ · ↑",tag:"#빈도 #적합도 #독립성",
+  what:"관찰빈도와 기대빈도의 괴리 총량.",how:"χ² = Σ (O−E)² / E",
+  when:"범주형 독립성, 모형 간 적합도 차이 검정.",why:"기대빈도 5 미만 셀이 20%를 넘으면 Fisher로 갑니다."},
+ d:{z:"b",x:960,y:500,sym:"d",nm:"Cohen's d",rng:"0 ~ ∞ · ↑",tag:"#효과크기 #표준화평균차 #p무관",
+  what:"두 집단 평균차가 표준편차 몇 개분인지.",how:"d = (M₁−M₂) / SD_pooled",
+  when:"t검정의 실질 크기 보고, 메타분석 투입.",why:".2·.5·.8. p만 쓰면 심사에서 지적됩니다."},
+ eta:{z:"b",x:1330,y:570,sym:"η²",nm:"에타제곱 / ω²",rng:"0 ~ 1 · ↑",tag:"#ANOVA효과크기 #설명분산 #부분η²",
+  what:"전체 변동 중 집단 구분이 설명하는 비율. ω²는 편향 보정판.",how:"η² = SS_between / SS_total",
+  when:"ANOVA·ANCOVA 결과 표의 마지막 열.",why:".01/.06/.14. 다요인 설계에서는 부분 η²임을 명시."},
+ LRT:{z:"e",x:1150,y:600,sym:"LRT",nm:"우도비 검정 Δ−2LL",rng:"0 ~ ∞ · ↑",tag:"#내포모형비교 #무선효과 #χ²분포",
+  what:"두 내포 모형의 적합 차이가 우연 이상인지 판정.",how:"Δ(−2LL) ~ χ²(Δdf)",
+  when:"무선기울기 추가가 정당한지 검정.",why:"고정효과 비교는 ML, 무선효과 비교는 REML 추정치라야 합니다."},
+ sr:{z:"a",x:700,y:560,sym:"sr²",nm:"준편상관 제곱",rng:"0 ~ 1 · ↑",tag:"#고유설명력 #ΔR²와동일 #위계적회귀",
+  what:"한 변인이 다른 변인과 겹치지 않고 홀로 설명하는 분산.",how:"sr² = R²_full − R²_reduced",
+  when:"위계적 회귀에서 순수 기여 보고.",why:"ΔR²와 수치가 같습니다. 중복 보고에 주의."},
+ dR2:{z:"c",x:640,y:520,sym:"ΔR²",nm:"R² 변화량",rng:"0 ~ 1 · ↑",tag:"#단계별투입 #증분설명력 #Fchange",
+  what:"변인군 추가로 늘어난 설명력.",how:"ΔR² = R²_step2 − R²_step1, F change로 검정",
+  when:"통제→독립→상호작용 순 위계적 회귀.",why:"조절효과 논문의 핵심 증거는 3단계의 ΔR²입니다."},
+ f2:{z:"c",x:920,y:560,sym:"f²",nm:"Cohen's f²",rng:"0 ~ ∞ · ↑",tag:"#회귀효과크기 #검정력 #GPower",
+  what:"회귀모형 또는 개별 변인의 효과크기.",how:"f² = R² / (1 − R²)",
+  when:"표본 수 산출(G*Power), 회귀·PLS 효과크기.",why:".02/.15/.35. 사전 표본설계 근거로 요구됩니다."},
+ GLM:{z:"k",core:true,x:800,y:560,sym:"GLM",nm:"일반선형모형",rng:"모든 원의 공통 조상",tag:"#상관 #t #F #회귀는_한몸",
+  what:"상관·t·ANOVA·회귀는 모두 Y = Xβ + ε 하나의 변형입니다.",how:"Y = Xβ + ε · β̂ = (XᵀX)⁻¹XᵀY",
+  when:"방법론 장에서 분석 전략의 일관성을 설명할 때.",why:"'왜 이 검정인가'를 계보로 설명하면 이해도가 드러납니다."},
+ beta:{z:"c",x:800,y:900,sym:"β",nm:"표준화 회귀계수",rng:"−1 근방 ~ +1 · |↑|",tag:"#상대적영향력 #단위무관 #변인간비교",
+  what:"타 변인 통제 시 X가 1 SD 늘 때 Y가 몇 SD 변하는지.",how:"β = B × (s_x / s_y)",
+  when:"어느 예측변인이 더 센지 비교할 때.",why:"실무 함의는 B로, 상대 비교는 β로 나눠 서술합니다."},
+ B:{z:"c",sym:"B",nm:"비표준화 계수",rng:"−∞ ~ ∞",tag:"#원단위 #실무해석 #절편포함",
+  what:"X 1단위 증가 시 Y의 실제 단위 변화량.",how:"Y = B₀ + B₁X + e",
+  when:"정책·실무 함의를 원단위로 말할 때.",why:"단위가 다른 변인끼리 B로 크기를 비교하면 오류입니다."},
+ R2:{z:"c",x:820,y:1050,sym:"R²",nm:"결정계수",rng:"0 ~ 1 · ↑",tag:"#설명분산 #adjR² #과적합주의",
+  what:"모형이 종속변인 변동을 설명한 비율.",how:"R² = 1 − SS_res / SS_tot",
+  when:"모형 요약 표의 첫 줄.",why:"변인을 넣을수록 커지므로 adjusted R²를 함께 보고합니다."},
+ OR:{z:"c",x:800,y:1020,sym:"OR",nm:"승산비",rng:"0 ~ ∞ · 기준 1",tag:"#로지스틱 #이분종속 #95%CI",
+  what:"X 1단위 증가 시 사건 승산이 몇 배가 되는지.",how:"OR = e^B",
+  when:"이직·탈락·합격 여부 예측.",why:"CI가 1을 포함하면 유의하지 않습니다. RR과 구분하세요."},
+ ab:{z:"d",x:700,y:880,sym:"ab",nm:"간접효과 (매개)",rng:"−∞ ~ ∞ · |↑|",tag:"#부트스트랩 #편향수정CI #PROCESS",
+  what:"X가 M을 거쳐 Y에 미치는 경로의 곱.",how:"indirect = a × b, 5,000회 bootstrap CI",
+  when:"매개모형·직렬다중매개 검증.",why:"Sobel 단독 사용은 요즘 권장되지 않습니다."},
+ gsem:{z:"d",x:680,y:1010,sym:"γ_S",nm:"구조경로계수",rng:"−1 근방 ~ +1 · |↑|",tag:"#잠재변인 #측정오차보정 #CR1.96",
+  what:"측정오차를 걷어낸 잠재변인 사이의 회귀계수.",how:"CR = 추정치 / S.E. ≥ 1.96",
+  when:"CFA 이후 구조모형 검증.",why:"측정모형 적합이 먼저 확보돼야 해석이 성립합니다."},
+ gam:{z:"e",x:900,y:880,sym:"γ",nm:"고정효과 계수",rng:"−∞ ~ ∞ · |↑|",tag:"#HLM #수준간효과 #중심화",
+  what:"모든 집단에 공통 적용되는 평균적 기울기·절편.",how:"Y_ij = γ₀₀ + γ₁₀X_ij + γ₀₁W_j + u₀j + r_ij",
+  when:"개인 수준과 조직 수준 변인을 함께 투입.",why:"중심화 방식에 따라 γ의 의미가 완전히 달라집니다."},
+ cli:{z:"e",x:920,y:1010,sym:"γ₁₁",nm:"교차수준 상호작용",rng:"−∞ ~ ∞ · |↑|",tag:"#조절효과 #조직특성 #단순기울기",
+  what:"상위 수준 변인이 하위 수준 기울기를 바꾸는 효과.",how:"γ₁₁ · W_j · X_ij 항의 유의성",
+  when:"'조직문화가 몰입–성과 관계를 조절하는가' 류 가설.",why:"유의하면 단순기울기 그래프를 반드시 첨부합니다."},
+ lam:{z:"a",x:430,y:620,sym:"λ",nm:"요인부하량",rng:"−1 ~ +1 · ↑",tag:"#문항–요인 #.50이상 #표준화",
+  what:"문항이 잠재요인을 얼마나 대표하는지의 상관.",how:"표준화 λ ≥ .50 (양호 ≥ .70)",
+  when:"EFA·CFA 결과 표.",why:"교차부하가 .40을 넘는 문항은 제거 근거를 서술합니다."},
+ HTMT:{z:"d",x:380,y:700,sym:"HTMT",nm:"이질–단일 특성비",rng:"0 ~ 1 · ↓",tag:"#판별타당도 #.85기준 #PLS선호",
+  what:"다른 개념 간 상관을 같은 개념 내 상관으로 나눈 비율.",how:"이질특성 상관평균 / 단일특성 상관 기하평균",
+  when:"구성개념이 실제로 구별되는지 입증.",why:"Fornell–Larcker보다 민감해 최근 선호됩니다."},
+ alpha:{z:"d",x:280,y:900,sym:"α",nm:"Cronbach 알파",rng:"0 ~ 1 · ↑",tag:"#내적일관성 #.70기준 #문항수민감",
+  what:"척도 문항들이 한 개념을 일관되게 재는 정도.",how:"α = k/(k−1)·[1 − Σs²ᵢ/s²_total]",
+  when:"모든 자기보고 척도의 신뢰도 보고.",why:"문항이 많으면 자동으로 높아집니다. 타우등가 가정의 한계도 알아두세요."},
+ omega:{z:"d",x:230,y:760,sym:"ω",nm:"McDonald 오메가",rng:"0 ~ 1 · ↑",tag:"#요인부하기반 #α대안 #비등가문항",
+  what:"실제 요인부하에 근거한 합성신뢰도. α의 가정을 완화한 버전.",how:"ω = (Σλ)² / [(Σλ)² + Σθ]",
+  when:"문항 기여도가 고르지 않은 척도.",why:"α와 ω를 나란히 보고하면 척도 검증의 성실성이 드러납니다."},
+ AVE:{z:"d",x:400,y:1050,sym:"AVE",nm:"평균분산추출",rng:"0 ~ 1 · ↑",tag:"#수렴타당도 #.50기준 #√AVE비교",
+  what:"잠재변인이 문항 분산 중 붙잡은 평균 비율.",how:"AVE = Σλ² / (Σλ² + Σθ)",
+  when:"CFA·PLS-SEM 타당도 표.",why:".50 미만이면 개념이 문항을 절반도 설명하지 못한다는 뜻입니다."},
+ RMSEA:{z:"d",x:520,y:1020,sym:"RMSEA",nm:"근사오차제곱근",rng:"0 ~ 1 · ↓",tag:"#절대적합 #.08이하 #90%CI",
+  what:"자유도를 벌점으로 반영한 모형–자료 괴리.",how:"√[(χ² − df) / (df(N−1))]",
+  when:"CFA·SEM 적합도 세트.",why:".06 이하 양호. CI 상한이 .10을 넘으면 방어가 어렵습니다."},
+ CFI:{z:"d",x:330,y:1050,sym:"CFI",nm:"비교적합지수 / TLI",rng:"0 ~ 1 · ↑",tag:"#상대적합 #.90수용 #.95양호",
+  what:"모든 변인이 무관하다는 최악 모형 대비 개선 정도.",how:"CFI = 1 − (χ²_m − df_m)/(χ²_b − df_b)",
+  when:"RMSEA·SRMR과 세트로 보고.",why:"지수 하나만 골라 보고하면 체리피킹으로 읽힙니다."},
+ SRMR:{z:"d",sym:"SRMR",nm:"표준화 잔차평균",rng:"0 ~ 1 · ↓",tag:"#잔차기반 #.08이하 #절대적합",
+  what:"관찰 상관행렬과 모형 함축 행렬의 평균 잔차.",how:"표준화 잔차의 제곱평균 제곱근",
+  when:"CFI·RMSEA와 함께 적합도 3종 세트.",why:"PLS-SEM에서는 사실상 유일한 적합 지표입니다."},
+ CR:{z:"d",sym:"CR",nm:"개념신뢰도",rng:"0 ~ 1 · ↑",tag:"#합성신뢰도 #.70기준 #SEM",
+  what:"잠재변인 측정의 내적 일관성을 부하량으로 계산.",how:"CR = (Σλ)² / [(Σλ)² + Σθ]",
+  when:"CFA 측정모형 검증 표.",why:"α보다 SEM 맥락에 더 적절한 신뢰도입니다."},
+ tau00:{z:"e",x:1320,y:900,sym:"τ₀₀",nm:"절편 분산 tau",rng:"0 ~ ∞ · 검정대상",tag:"#집단간차이 #무선절편 #HLM핵심",
+  what:"집단마다 출발점(절편)이 얼마나 다른지의 분산.",how:"Y_ij = γ₀₀ + u₀j + r_ij, Var(u₀j)=τ₀₀",
+  when:"무조건모형에서 집단 간 변량 확인.",why:"높고 낮음이 아니라 '유의하게 0이 아닌가'가 기준입니다."},
+ tau11:{z:"e",x:1370,y:760,sym:"τ₁₁",nm:"기울기 분산",rng:"0 ~ ∞ · 검정대상",tag:"#무선기울기 #관계의이질성 #조절탐색",
+  what:"X–Y 관계 강도가 집단마다 다른 정도.",how:"Var(u₁j) = τ₁₁",
+  when:"교차수준 조절효과 직전 단계.",why:"유의하지 않으면 조절변인을 찾을 이유가 약해집니다."},
+ ICC:{z:"e",x:1200,y:1050,sym:"ICC",nm:"급내상관 ICC(1)",rng:"0 ~ 1 · 판단",tag:"#.05이상 #다층필요성 #집단소속",
+  what:"전체 분산 중 집단 소속으로 설명되는 비율.",how:"ICC = τ₀₀ / (τ₀₀ + σ²)",
+  when:"HLM을 써야 하는지 결정하는 첫 관문.",why:".05~.10 이상이면 다층 사용의 정당한 근거가 됩니다."},
+ rwg:{z:"e",x:1080,y:1020,sym:"r_wg",nm:"합의도 / ICC(2)",rng:"0 ~ 1 · ↑",tag:"#집단합의 #.70기준 #합산근거",
+  what:"개인 응답을 조직 수준 변인으로 올려도 되는지의 합의 정도.",how:"r_wg = 1 − (s²_obs / s²_exp)",
+  when:"조직문화·팀풍토를 평균 내 상위 변인으로 쓸 때.",why:"r_wg ≥ .70, ICC(2) ≥ .70이 합산 정당화의 관례입니다."},
+
+ Wald:{z:"b",sym:"Wald",nm:"Wald 통계량",rng:"0 ~ ∞ · ↑",tag:"#로지스틱 #계수유의성 #χ²분포",
+  what:"로지스틱 계수가 0과 다른지 검정하는 값.",how:"Wald = (B / S.E.)²",
+  when:"로지스틱·프로빗 회귀 계수 표.",why:"계수가 크면 SE가 부풀어 과소검정될 수 있어 우도비 검정을 병용합니다."},
+ NR2:{z:"c",sym:"R²_N",nm:"Nagelkerke R²",rng:"0 ~ 1 · ↑",tag:"#유사결정계수 #로지스틱 #CoxSnell보정",
+  what:"로지스틱 모형의 설명력을 0~1로 재조정한 유사 R².",how:"Cox & Snell R²를 최대값으로 나눠 보정",
+  when:"로지스틱 모형 요약.",why:"선형회귀 R²와 같은 의미가 아님을 각주로 밝힙니다."},
+ HL:{z:"d",sym:"H-L",nm:"Hosmer–Lemeshow",rng:"p > .05 이면 양호",tag:"#적합도 #예측vs관찰 #역방향해석",
+  what:"예측확률 십분위별 관찰빈도와의 일치도.",how:"χ² 기반, 유의하지 않아야 적합",
+  when:"로지스틱 회귀 모형 적합도.",why:"유의하면 오히려 모형이 부적합하다는 뜻입니다."},
+ AUC:{z:"c",sym:"AUC",nm:"ROC 곡선 아래 면적",rng:"0.5 ~ 1 · ↑",tag:"#분류성능 #민감도특이도 #.70이상",
+  what:"임의의 사건–비사건 쌍을 올바로 순서 매길 확률.",how:"ROC 곡선의 적분값",
+  when:"예측모형의 판별력 평가.",why:".70 수용 · .80 양호 · .90 우수."},
+ Ent:{z:"d",sym:"Ent",nm:"Entropy",rng:"0 ~ 1 · ↑",tag:"#LPA #분류정확도 #.80이상",
+  what:"잠재계층 분류가 얼마나 명확한지.",how:"사후확률 기반 지수, 1에 가까울수록 명확",
+  when:"LPA·LCA 계층 수 결정.",why:".80 이상 권장. 단독으로 계층 수를 정하는 근거는 아닙니다."},
+ BLRT:{z:"b",sym:"BLRT",nm:"LMR / BLRT",rng:"p < .05 이면 k계층",tag:"#계층수결정 #k vs k−1 #부트스트랩",
+  what:"k계층 모형이 k−1계층보다 나은지 검정.",how:"Lo-Mendell-Rubin · Bootstrap LRT",
+  when:"LPA·LCA에서 계층 수를 늘려가며 비교.",why:"BIC 최저, Entropy, 최소집단 5%, 이론적 해석가능성까지 함께 봅니다."},
+ HR:{z:"c",sym:"HR",nm:"위험비 Hazard Ratio",rng:"0 ~ ∞ · 기준 1",tag:"#생존분석 #Cox #시간고려",
+  what:"매 시점에서 사건이 발생할 순간 위험의 비율.",how:"HR = e^β (Cox 비례위험모형)",
+  when:"이직 시점·중도탈락 시점처럼 '언제'가 중요한 종속변인.",why:"OR과 달리 시간 정보를 담습니다. CI가 1을 넘으면 비유의."},
+ LogR:{z:"b",sym:"LR",nm:"Log-rank 검정",rng:"χ² · ↑",tag:"#생존곡선비교 #KaplanMeier #집단차",
+  what:"두 집단의 생존곡선 전체가 다른지 검정.",how:"관찰–기대 사건수 기반 χ²",
+  when:"Kaplan-Meier 곡선을 집단별로 그린 뒤.",why:"곡선이 교차하면 검정력이 떨어져 해석에 주의합니다."},
+ PH:{z:"d",sym:"PH",nm:"비례위험 가정",rng:"p > .05 이면 충족",tag:"#Schoenfeld잔차 #Cox전제 #시간상호작용",
+  what:"집단 간 위험비가 시간에 관계없이 일정한가.",how:"Schoenfeld 잔차 × 시간의 상관 검정",
+  when:"Cox 회귀 결과 보고 전 필수 진단.",why:"위배 시 시간의존 공변량 또는 층화 Cox로 전환합니다."},
+ AR:{z:"a",sym:"AR",nm:"자기회귀계수",rng:"−1 ~ +1 · |↑|",tag:"#종단 #시간적안정성 #T1→T2",
+  what:"이전 시점의 자기 자신이 다음 시점을 예측하는 정도.",how:"X_t2 = β·X_t1 + e",
+  when:"자기회귀교차지연(ARCL) 모형의 대각 경로.",why:"이 경로를 통제해야 교차지연 계수가 인과적 주장을 얻습니다."},
+ CL:{z:"c",sym:"CL",nm:"교차지연계수",rng:"−1 근방 ~ +1 · |↑|",tag:"#인과방향 #X→Y vs Y→X #종단",
+  what:"이전 시점 X가 이후 시점 Y를 예측하는 정도(반대 방향도 동시 추정).",how:"Y_t2 = β_CL·X_t1 + β_AR·Y_t1 + e",
+  when:"상호 인과 방향을 가리려는 종단연구.",why:"두 방향 계수를 모두 보고해야 '어느 쪽이 앞서는가'가 성립합니다."},
+ MI:{z:"d",sym:"MI",nm:"측정동일성",rng:"ΔCFI ≤ .01 · ΔRMSEA ≤ .015",tag:"#형태 #측정 #절편 #종단·다집단",
+  what:"시점·집단이 달라도 같은 개념을 같은 방식으로 재고 있는가.",how:"형태→요인부하→절편 순 제약 후 적합도 변화 비교",
+  when:"종단 SEM, 다집단 비교의 전제 조건.",why:"동일성 없이 평균이나 계수를 비교하면 비교 자체가 무의미해집니다."},
+ Q2:{z:"c",sym:"Q²",nm:"예측적합도 Q²",rng:"> 0 이면 예측력 있음",tag:"#PLS #Blindfolding #교차타당",
+  what:"모형이 관측치를 실제로 재현·예측하는 능력.",how:"Blindfolding · PLSpredict",
+  when:"PLS-SEM 결과 보고.",why:"R²가 표본 내 설명이라면 Q²는 표본 밖 예측입니다."},
+ IMM:{z:"c",sym:"IMM",nm:"조절된 매개 지수",rng:"CI가 0 미포함",tag:"#PROCESS #모형7·14·58 #조건부간접효과",
+  what:"조절변인 값에 따라 간접효과가 달라지는 정도를 하나의 수치로.",how:"Index = a₃ × b, bootstrap CI",
+  when:"조절된 매개 / 매개된 조절 가설의 최종 판정.",why:"조건부 간접효과 나열만으로는 부족합니다. 이 지수가 결론입니다."},
+ JN:{z:"b",sym:"JN",nm:"Johnson–Neyman 구간",rng:"유의 전환점",tag:"#단순기울기 #조절 #유의영역",
+  what:"조절변인이 어느 값 이상·이하일 때 효과가 유의해지는 경계.",how:"조건부 효과의 t = ±1.96이 되는 지점",
+  when:"조절효과가 유의할 때 ±1SD 도표와 함께.",why:"임의의 ±1SD보다 정보량이 많아 최근 선호됩니다."},
+ Sobel:{z:"b",sym:"Z",nm:"Sobel 검정",rng:"|Z| > 1.96",tag:"#고전적매개 #정규성가정 #보조지표",
+  what:"간접효과 a×b의 표준오차로 유의성을 검정.",how:"Z = ab / √(b²·s_a² + a²·s_b²)",
+  when:"Baron & Kenny 절차의 4단계 보조.",why:"간접효과 분포가 비정규라 부트스트랩 CI로 대체하는 추세입니다."},
+ AIC:{z:"k",sym:"AIC",nm:"AIC / BIC / aBIC",rng:"−∞ ~ ∞ · ↓",tag:"#모형비교 #간명성벌점 #비내포가능",
+  what:"적합도에 모수 개수 벌점을 매긴 모형 선택 지표.",how:"AIC = −2LL + 2k · BIC = −2LL + k·lnN",
+  when:"다층·LPA 등 모형 수를 늘려가며 비교.",why:"절대값이 아니라 모형 간 상대 비교로만 의미가 있습니다."},
+ p:{z:"k",sym:"p",nm:"유의확률",rng:"0 ~ 1 · ↓",tag:"#영가설 #.05 #크기아님",
+  what:"영가설이 참일 때 관찰값 이상이 나올 확률.",how:"p < .05 · .01 · .001",
+  when:"모든 통계적 검정 결과.",why:"p는 효과 크기가 아닙니다. 반드시 효과크기와 짝지어 보고합니다."},
+ CI:{z:"k",sym:"CI",nm:"신뢰구간",rng:"구간 추정 · 폭 ↓",tag:"#95% #0포함여부 #정밀도",
+  what:"모수가 있을 법한 구간. 폭이 좁을수록 정밀.",how:"추정치 ± 1.96 × SE",
+  when:"β·OR·HR·간접효과 등 모든 추정치.",why:"0(OR·HR은 1)을 포함하면 유의하지 않다는 뜻입니다."},
+ pow:{z:"k",sym:"1−β",nm:"검정력",rng:"0 ~ 1 · ↑",tag:"#.80기준 #표본수산출 #GPower",
+  what:"실제 효과가 있을 때 그것을 잡아낼 확률.",how:"효과크기 · α · N으로 산출",
+  when:"연구 설계 단계의 표본 수 근거.",why:"사후 검정력 분석보다 사전 산출이 정당합니다."},
+ VIF:{z:"k",sym:"VIF",nm:"분산팽창지수",rng:"1 ~ ∞ · ↓",tag:"#다중공선성 #10미만 #중심화",
+  what:"예측변인들이 겹쳐 계수 추정이 불안정해진 정도.",how:"VIF = 1 / (1 − R²ᵢ)",
+  when:"다중회귀 투입 직후 진단.",why:"상호작용항 투입 시 급등합니다. 평균중심화로 완화합니다."},
+ DW:{z:"k",sym:"DW",nm:"Durbin–Watson",rng:"0 ~ 4 · 2 근처",tag:"#잔차독립성 #자기상관 #회귀가정",
+  what:"잔차가 서로 독립인지(자기상관이 없는지) 점검.",how:"인접 잔차 차이 제곱합 / 잔차 제곱합",
+  when:"회귀분석 가정 진단.",why:"1.5~2.5를 벗어나면 자기상관 의심. 종단자료에서 특히 중요합니다."},
+ CMB:{z:"k",sym:"CMB",nm:"공통방법편의",rng:"단일요인 < 50%",tag:"#Harman #동일응답자 #자기보고",
+  what:"같은 사람이 모든 변인을 응답해 생기는 인위적 상관.",how:"Harman 단일요인검정 · 잠재공통방법요인",
+  when:"설문 기반 횡단연구 전부.",why:"HRD·경영 분야 심사에서 가장 자주 요구되는 방어 논리입니다."},
+ SK:{z:"k",sym:"S/K",nm:"왜도 · 첨도",rng:"|S|<2 · |K|<7",tag:"#정규성 #모수검정전제 #ML추정",
+  what:"분포의 치우침과 뾰족함.",how:"Skewness · Kurtosis",
+  when:"기술통계 표, SEM의 ML 추정 정당화.",why:"위배 시 부트스트랩·로버스트 추정으로 대응합니다."},
+ N:{z:"k",sym:"N",nm:"표본 크기 · 결측",rng:"설계 근거 필요",tag:"#FIML #다중대체 #응답률",
+  what:"실제 투입 사례 수와 결측 처리 방식.",how:"목록별 삭제 vs FIML vs 다중대체",
+  when:"연구방법 장의 표본 절.",why:"결측 처리를 밝히지 않으면 모든 수치의 신뢰가 흔들립니다."}
+};
+
+const COMMON=['p','CI','pow','AIC','VIF','DW','CMB','SK','N'];
+
+const METHODS=[
+ {no:"01",kr:"단순 · 다중 회귀분석",en:"OLS Regression",q:"여러 변인 중 무엇이 결과를 얼마나 설명하는가?",
+  ids:['B','beta','R2','F','sr','VIF','DW'],cut:"F 유의 · adjusted R² 보고 · VIF < 10 · 잔차 정규성 확인"},
+ {no:"02",kr:"위계적 회귀분석",en:"Hierarchical Regression",q:"통제변인을 걷어내고도 내 변인이 추가로 설명하는가?",
+  ids:['dR2','sr','beta','R2','f2'],cut:"단계별 ΔR²와 F change가 핵심 증거. 투입 순서의 이론적 근거 필수"},
+ {no:"03",kr:"매개효과분석 (Baron & Kenny)",en:"Mediation",q:"X는 왜 Y에 영향을 주는가? 그 통로는 무엇인가?",
+  ids:['ab','Sobel','CI','beta','R2'],cut:"부트스트랩 5,000회 편향수정 CI가 0을 포함하지 않을 것"},
+ {no:"04",kr:"조절효과분석 (단순 조절)",en:"Moderation",q:"그 효과는 누구에게, 어떤 조건에서 더 강한가?",
+  ids:['dR2','beta','JN','VIF','f2'],cut:"평균중심화 후 상호작용항 β 유의 + ΔR² + 단순기울기 도표"},
+ {no:"05",kr:"조절된 매개 · 매개된 조절 · 조절된 조절",en:"Conditional Process",q:"통로 자체가 조건에 따라 열리고 닫히는가?",
+  ids:['IMM','ab','JN','CI','beta'],cut:"조절된 매개 지수의 CI가 0 미포함. 3원 상호작용은 하위 2원항을 모두 투입"},
+ {no:"06",kr:"이중(직렬 다중) 매개효과분석",en:"Serial Mediation",q:"X → M1 → M2 → Y 의 연쇄가 성립하는가?",
+  ids:['ab','CI','beta','R2'],cut:"특정 간접효과별 CI + 경로 간 대비(contrast) 검정까지 보고"},
+ {no:"07",kr:"로지스틱 회귀분석",en:"Logistic Regression",q:"'그렇다 / 아니다'가 갈리는 확률을 무엇이 바꾸는가?",
+  ids:['OR','Wald','NR2','HL','AUC','CI'],cut:"OR의 95% CI가 1 미포함 · H-L은 p > .05여야 적합 · 분류정확도 동반"},
+ {no:"08",kr:"잠재프로파일 · 잠재계층분석",en:"LPA / LCA",q:"사람들은 몇 개의 질적으로 다른 유형으로 나뉘는가?",
+  ids:['AIC','Ent','BLRT','N'],cut:"BIC·aBIC 최저 · Entropy ≥ .80 · LMR·BLRT 유의 · 최소집단 5% 이상 · 해석가능성"},
+ {no:"09",kr:"생존분석",en:"Survival / Cox",q:"사건이 일어나는가가 아니라 '언제' 일어나는가?",
+  ids:['HR','LogR','PH','CI'],cut:"Kaplan-Meier 곡선 + Log-rank + 비례위험 가정(Schoenfeld) 검정 보고"},
+ {no:"10",kr:"자기회귀교차지연분석",en:"ARCL / CLPM",q:"X가 Y보다 앞서는가, Y가 X보다 앞서는가?",
+  ids:['AR','CL','MI','CFI','RMSEA'],cut:"측정동일성 확보 후 양방향 교차지연 동시 추정. RI-CLPM 검토 권장"},
+ {no:"11",kr:"다층분석 (HLM)",en:"Multilevel Modeling",q:"이 관계는 개인의 이야기인가, 조직의 이야기인가?",
+  ids:['ICC','tau00','tau11','gam','cli','LRT','rwg'],cut:"ICC ≥ .05로 진입 정당화 → 무조건 → 무선계수 → 절편·기울기 모형 순서"},
+ {no:"12",kr:"구조방정식 CB-SEM",en:"Covariance-Based SEM",q:"측정오차를 걷어낸 개념들 사이의 관계 구조는?",
+  ids:['lam','AVE','CR','HTMT','CFI','RMSEA','SRMR','gsem'],cut:"2단계 접근 — 측정모형 적합 확보 후 구조모형. χ²/df ≤ 3"},
+ {no:"13",kr:"구조방정식 PLS-SEM",en:"Partial Least Squares",q:"표본이 작고 예측이 목적일 때의 구조 검증은?",
+  ids:['lam','AVE','HTMT','R2','f2','Q2','VIF'],cut:"외부적재 ≥ .70 · HTMT < .85 · Q² > 0 · 부트스트랩 t로 경로 유의성"},
+ {no:"14",kr:"MSEM · 종단 SEM · DSEM",en:"Multilevel & Longitudinal SEM",q:"측정오차·시간·위계를 한 모형에서 동시에 다루려면?",
+  ids:['MI','ICC','tau00','gsem','CFI','RMSEA','AIC'],cut:"수준별 분산 분해 + 측정동일성 + 잠재성장모형의 절편·기울기 무선효과"}
+];
+
+/* ── 렌더 ── */
+function chipEl(id,pos){
+ const d=DB[id],b=document.createElement('button');
+ b.className='chip'+(d.core?' core':'');b.dataset.id=id;b.type='button';
+ if(pos){b.style.left=d.x+'px';b.style.top=d.y+'px';}
+ b.innerHTML=`<span class="bar" style="background:${C[d.z][0]}"></span><span class="in">
+   <span class="sym">${d.sym}</span><span class="nm">${d.nm}</span>
+   <span class="rng">${d.rng}</span><span class="tag">${d.tag}</span></span>`;
+ return b;
+}
+const stage=document.getElementById('stage');
+let mapped=0;
+Object.keys(DB).forEach(id=>{if(DB[id].x!==undefined){stage.appendChild(chipEl(id,true));mapped++;}});
+const cm=document.getElementById('common');
+COMMON.forEach(id=>cm.appendChild(chipEl(id,false)));
+document.getElementById('cnt1').textContent=Object.keys(DB).length;
+
+const mw=document.getElementById('methods');
+METHODS.forEach(m=>{
+ const el=document.createElement('article');el.className='m';
+ el.innerHTML=`<div class="no">${m.no}</div><h3>${m.kr}</h3><div class="en">${m.en}</div>
+  <p class="q">${m.q}</p><div class="lbl">Required indicators</div>
+  <div class="pills">${m.ids.map(i=>`<button type="button" class="pill" data-id="${i}">
+    <i style="background:${C[DB[i].z][0]}"></i>${DB[i].sym} · ${DB[i].nm}</button>`).join('')}</div>
+  <div class="cut"><b>판정 기준</b>${m.cut}</div>`;
+ mw.appendChild(el);
+});
+
+const ORDER={a:1,b:2,c:3,d:4,e:5,k:6};
+const idx=document.getElementById('index');
+Object.keys(DB).sort((x,y)=>ORDER[DB[x].z]-ORDER[DB[y].z]).forEach(id=>{
+ const d=DB[id],tr=document.createElement('tr');
+ tr.innerHTML=`<td><span class="sy">${d.sym}</span></td>
+  <td><b>${d.nm}</b><br><span style="font-size:11.5px;color:#6C6963">
+    <span class="zc" style="background:${C[d.z][0]}"></span>${C[d.z][1]}</span></td>
+  <td>${d.what}<br><span style="font-size:12.5px;color:#57534d">${d.when}</span></td>
+  <td style="font-family:'IBM Plex Mono',monospace;font-size:12px">${d.rng}<br>${d.how}</td>
+  <td style="font-size:13px">${d.why}</td>`;
+ idx.appendChild(tr);
+});
+
+/* ── 도크 ── */
+const dock=document.getElementById('dock');
+const G=id=>document.getElementById(id);
+document.addEventListener('click',e=>{
+ const t=e.target.closest('[data-id]');if(!t)return;
+ const d=DB[t.dataset.id];
+ G('dBar').style.background=C[d.z][0];G('dSym').textContent=d.sym;G('dZone').textContent=C[d.z][1];
+ G('dName').textContent=d.nm;G('dMeta').textContent=d.rng+'   ·   '+d.tag;
+ G('dWhat').textContent=d.what;G('dHow').textContent=d.how;G('dWhen').textContent=d.when;G('dWhy').textContent=d.why;
+ dock.classList.add('on');G('hint').style.display='none';
+});
+G('close').onclick=()=>dock.classList.remove('on');
+addEventListener('keydown',e=>{if(e.key==='Escape')dock.classList.remove('on')});
+
+/* ── 스케일 ── */
+const stg=document.querySelector('.stage');
+function fit(){const s=Math.min(1,stg.clientWidth/1600);stage.style.transform=`scale(${s})`;stg.style.height=(1250*s)+'px';}
+fit();addEventListener('resize',fit);
+</script>
+</body>
+</html>

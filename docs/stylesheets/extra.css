@@ -1,0 +1,140 @@
+/* ==========================================================================
+   HRD 연구방법론 특강 · MkDocs Material 커스텀
+   콘크리트 브루탈리즘 팔레트 — 모노크롬 + 핑크/마젠타/바이올렛
+   ========================================================================== */
+
+:root {
+  --md-primary-fg-color:        #161514;
+  --md-primary-fg-color--light: #3a3835;
+  --md-primary-fg-color--dark:  #000000;
+  --md-accent-fg-color:         #B34A83;
+  --md-accent-fg-color--transparent: #b34a831a;
+  --p1:#EBC2D6; --p2:#B34A83; --p3:#523074;
+  --md-typeset-a-color: #B34A83;
+}
+
+/* 다크 모드 */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:  #EBC2D6;
+  --md-accent-fg-color:   #EBC2D6;
+  --md-typeset-a-color:   #EBC2D6;
+  --md-default-bg-color:  #16151a;
+}
+
+/* ── 헤딩 — 굵고 촘촘하게 ── */
+.md-typeset h1 {
+  font-weight: 800; letter-spacing: -.03em; line-height: 1.05;
+  border-bottom: 3px solid var(--md-primary-fg-color);
+  padding-bottom: .3em;
+}
+.md-typeset h2 {
+  font-weight: 800; letter-spacing: -.02em;
+  border-left: 6px solid var(--p2);
+  padding-left: .5em; margin-top: 2.2em;
+}
+.md-typeset h3 { font-weight: 700; letter-spacing: -.01em; }
+
+/* ── 상단 헤더 ── */
+.md-header { border-bottom: 2px solid var(--md-primary-fg-color); }
+.md-tabs { border-bottom: 1px solid rgba(0,0,0,.1); }
+
+/* ── 표 — 각지고 선명하게 ── */
+.md-typeset table:not([class]) {
+  border: 2px solid var(--md-primary-fg-color);
+  font-size: .74rem;
+}
+.md-typeset table:not([class]) th {
+  background: var(--md-primary-fg-color);
+  color: #fff; font-weight: 700;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .68rem; letter-spacing: .04em;
+}
+.md-typeset table:not([class]) tr:nth-child(even) { background: #faf9f7; }
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) tr:nth-child(even) { background: #1c1b21; }
+
+/* ── 3단 분해 상자 ── */
+.tri {
+  border: 2px solid var(--md-primary-fg-color);
+  margin: 1.2em 0;
+}
+.tri > p {
+  margin: 0 !important;
+  padding: .8em 1em;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+  font-size: .82rem;
+}
+.tri > p:last-child { border-bottom: 0; }
+.tri > p:nth-child(1) { border-left: 6px solid var(--p1); }
+.tri > p:nth-child(2) { border-left: 6px solid #B0ADA6; }
+.tri > p:nth-child(3) { border-left: 6px solid var(--p2); }
+.tri strong:first-child { font-family: "IBM Plex Mono", monospace; }
+
+/* ── admonition 색을 팔레트에 맞춤 ── */
+.md-typeset .admonition.abstract,
+.md-typeset details.abstract { border-color: var(--p2); }
+.md-typeset .abstract > .admonition-title,
+.md-typeset .abstract > summary {
+  background: var(--p1); color: #161514;
+}
+.md-typeset .abstract > .admonition-title::before,
+.md-typeset .abstract > summary::before { background-color: #161514; }
+
+.md-typeset .admonition.quote { border-color: var(--p3); }
+.md-typeset .quote > .admonition-title { background: #52307415; }
+.md-typeset .quote > .admonition-title::before { background-color: var(--p3); }
+
+.md-typeset .admonition.note { border-color: var(--p3); }
+
+/* lead(abstract 빈제목) 상자를 인용문처럼 크게 */
+.md-typeset .abstract > .admonition-title:empty { display: none; }
+.md-typeset .admonition.abstract {
+  font-size: .95rem; font-weight: 500;
+}
+
+/* ── 코드블록 ── */
+.md-typeset pre > code { font-size: .74rem; }
+.md-typeset .highlight { border-left: 3px solid var(--p3); }
+
+/* ── 계보도 iframe ── */
+.genealogy-frame {
+  border: 2px solid var(--md-primary-fg-color);
+  margin: 1.2em 0; height: 78vh; min-height: 560px;
+}
+.genealogy-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+/* ── grid cards 강조 ── */
+.md-typeset .grid.cards > ul > li {
+  border: 2px solid var(--md-primary-fg-color);
+  border-radius: 0;
+  transition: background .15s;
+}
+.md-typeset .grid.cards > ul > li:hover {
+  background: var(--p1);
+  box-shadow: 4px 4px 0 var(--md-primary-fg-color);
+}
+[data-md-color-scheme="slate"] .md-typeset .grid.cards > ul > li:hover {
+  background: #2a2830;
+}
+
+/* ── 버튼 ── */
+.md-typeset .md-button {
+  border-radius: 0; border-width: 2px; font-weight: 700;
+}
+.md-typeset .md-button--primary {
+  background: var(--p2); border-color: var(--p2);
+}
+
+/* ── 인라인 코드 (S1~S4 배지 등) ── */
+.md-typeset code {
+  border-radius: 2px;
+  font-size: .78em;
+}
+
+/* ── def_list (질문 상자) ── */
+.md-typeset dl dt { font-weight: 700; }
+.md-typeset dl dd { border-left: 3px solid var(--p1); padding-left: 1em; }
+
+/* 모바일에서 표 폰트 축소 */
+@media screen and (max-width: 44.9em) {
+  .md-typeset table:not([class]) { font-size: .68rem; }
+}

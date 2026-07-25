@@ -1,0 +1,126 @@
+site_name: HRD 연구방법론 특강
+site_description: 산업인력개발학(HRD) 연구초심자를 위한 8시간 연구방법론 특강 — 슬라이드·R 실습·예제 데이터
+site_author: 정보영 (한국공학대학교 산업인력개발학)
+copyright: >
+  © 2026 정보영 · 강의자료 CC BY-NC-SA 4.0 · 코드 MIT
+
+# GitHub Pages 배포 시 아래를 실제 계정으로 바꾸세요
+site_url: https://byjung-tukorea.github.io/hrd-research-methods/
+repo_url: https://github.com/byjung-tukorea/hrd-research-methods
+repo_name: hrd-research-methods
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: ko
+  font:
+    text: Noto Sans KR
+    code: IBM Plex Mono
+  palette:
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: 다크 모드로
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: 라이트 모드로
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tooltips
+  icon:
+    repo: fontawesome/brands/github
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      use_pygments: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.smartsymbols
+  - attr_list
+  - md_in_html
+  - def_list
+  - tables
+  - footnotes
+  - toc:
+      permalink: true
+      permalink_title: 이 절로 가는 링크
+      toc_depth: 3
+
+plugins:
+  - search:
+      lang:
+        - ko
+        - en
+
+extra:
+  social:
+    - icon: fontawesome/solid/envelope
+      link: mailto:byjung@tukorea.ac.kr
+      name: byjung@tukorea.ac.kr
+  generator: false
+
+nav:
+  - 홈: index.md
+  - 본 과정:
+      - m0.md
+      - m1.md
+      - m2.md
+      - m3.md
+      - m4.md
+      - m5.md
+      - m6.md
+      - m7.md
+      - m8.md
+      - m9.md
+  - 확장 트랙:
+      - e1.md
+      - e2.md
+      - e3.md
+      - e4.md
+  - 계보도: genealogy.md
+  - 실습:
+      - R 실습 키트: labs.md
+  - 유인물:
+      - handouts/00_syllabus.md
+      - handouts/01_design_worksheet.md
+      - handouts/02_reporting_checklist.md
+      - handouts/03_glossary.md
+      - handouts/04_defense_questions.md
+      - handouts/05_cheatsheet.md
+  - 교재 연계: sources.md
+
+# labs 폴더의 R·CSV·README는 다운로드용 정적 파일 (문서 페이지 아님)
+exclude_docs: |
+  labs/README.md
